@@ -15,3 +15,34 @@ library(rmdformats)
 dat <- read_csv("Data/hotel_bookings.csv")
 ```
 
+```{r}
+# process the data to only contains information of city hotel
+dat2 <- dat %>% dplyr::filter(hotel %in% c("City Hotel")
+)
+```
+
+## count the number of arrivals per month of City Hotel
+```{r}
+dat3 <-dat2 %>%
+  dplyr::select(arrival_date_month) %>%
+group_by(arrival_date_month) %>%
+  mutate(arrivals = n()) %>%
+  unique() %>%
+  arrange(-arrivals)
+
+#dat3 <-dat2 %>%  
+# count(arrival_date_month, names = "arrivals", sort = TRUE)
+
+kable(dat3, caption = "Number of Arrivals per month in 2016") %>%
+kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+### use a bar plot to visualize arrivals per month of City Hotel
+```{r, caption = "number of arrivals in different month in 2016"}
+p1 <- dat2 %>% ggplot(aes(arrival_date_month)) +
+   geom_bar(aes(x = arrival_date_month)) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+p1
+```
+
+## 
