@@ -14,3 +14,36 @@ library(rmdformats)
 ```{r, echo = TRUE, message = FALSE, warning = FALSE}
 dat <- read_csv("Data/hotel_bookings.csv")
 ```
+
+```{r}
+# process the data to only contains information of Resort hotel
+dat5 <- dat %>% dplyr::filter(hotel %in% c("Resort Hotel")
+)
+```
+
+## count the number of arrivals per month of Resort Hotel
+```{r}
+dat6 <-dat5 %>%
+  dplyr::select(arrival_date_month) %>%
+group_by(arrival_date_month) %>%
+  mutate(arrivals = n()) %>%
+  unique() %>%
+  arrange(-arrivals)
+
+#dat6 <-dat5 %>%  
+# count(arrival_date_month, names = "arrivals", sort = TRUE)
+
+kable(dat6, caption = "Number of Arrivals per month of Resort Hotel in 2016") %>%
+kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+### use a bar plot to visualize arrivals per month of Resort Hotel
+```{r}
+p3 <- dat5 %>% ggplot(aes(arrival_date_month)) +
+   geom_bar(aes(x = arrival_date_month)) +
+  ggtitle("Number of Arrivals in Different Month of Resort Hotel in 2016") + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+p3
+```
+
+**According to the table from dat6 and bar plot p3 above, we can find the duration from April to May is the peak time for travel for Resort Hotel, the following peak time is the duration in October.**s
