@@ -1,3 +1,21 @@
+---
+title: “ETC5513 Assignment2”
+authur: "Lulu Pi"
+student ID: 27370038
+output:
+  html_document:
+    df_print: paged
+    theme: cerulean
+    toc: yes
+    toc_depth: '2'
+  
+---
+
+# Introduction 
+The goal of this report is to find when is the best time of year to book a hotel room, and compare the average daily rate (ADR) and number of special requests between the city hotel and the resort hotel. 
+The data used in this research contains booking information for a city hotel and a resort hotel in 2016, and includes information such as number of days that elapsed between the booking and arrival date, month of arrival date, ADR and number of special requests. 
+This can help hotels to prepare the best services in advance on the most busy months, including the efficient supplies for special requests. Through comparing the ADR which shows how much revenue is made per room on average, these hotels can make some decisions and look into ways to boost price per room to increase their ADR. 
+
 
 # Loading libraries
 
@@ -15,34 +33,7 @@ library(rmdformats)
 dat <- read_csv("Data/hotel_bookings.csv")
 ```
 
-```{r}
-# process the data to only contains information of city hotel
-dat2 <- dat %>% dplyr::filter(hotel %in% c("City Hotel")
-)
-```
+# The number of arrival in each month in 2016
 
-## count the number of arrivals per month of City Hotel
-```{r}
-dat3 <-dat2 %>%
-  dplyr::select(arrival_date_month) %>%
-group_by(arrival_date_month) %>%
-  mutate(arrivals = n()) %>%
-  unique() %>%
-  arrange(-arrivals)
+# The average daily rate 
 
-#dat3 <-dat2 %>%  
-# count(arrival_date_month, names = "arrivals", sort = TRUE)
-
-kable(dat3, caption = "Number of Arrivals per month in 2016") %>%
-kable_styling(bootstrap_options = c("striped", "hover"))
-```
-
-### use a bar plot to visualize arrivals per month of City Hotel
-```{r, caption = "number of arrivals in different month in 2016"}
-p1 <- dat2 %>% ggplot(aes(arrival_date_month)) +
-   geom_bar(aes(x = arrival_date_month)) +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1))
-p1
-```
-
-## 
