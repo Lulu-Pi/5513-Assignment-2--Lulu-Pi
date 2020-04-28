@@ -68,8 +68,7 @@ p2 <- dat4 %>% ggplot(aes(x = arrival_date_month, y=adr)) +
   ggtitle("ADR in 12 months of City Hotel in 2016") +
   geom_point()
 p2
-```
-  
+```  
 
 
 
