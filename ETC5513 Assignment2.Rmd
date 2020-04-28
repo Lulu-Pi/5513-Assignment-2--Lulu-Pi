@@ -1,28 +1,16 @@
 ---
 title: "5513 Assignment2"
+authur: "Lulu Pi"
+student ID: 27370038
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE, cache=TRUE, messages=FALSE, warning=FALSE)
+library(ggplot2)
 ```
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
-```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+# Introduction
+The goal of this report is to find when is the best time of year to book a hotel room, and compare the average daily rate (ADR) and number of special requests between the city hotel and the resort hotel. 
+The data used in this research contains booking information for a city hotel and a resort hotel, and includes information such as number of days that elapsed between the booking and arrival date, month of arrival date, ADR and number of special requests. 
+This can help hotels to prepare the best services in advance on the most busy months, including the efficient supplies for special requests. Through comparing the ADR which shows how much revenue is made per room on average, these hotels can make some decisions and look into ways to boost price per room to increase their ADR. 
