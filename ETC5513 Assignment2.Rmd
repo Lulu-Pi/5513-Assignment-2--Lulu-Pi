@@ -46,4 +46,29 @@ p3 <- dat5 %>% ggplot(aes(arrival_date_month)) +
 p3
 ```
 
-**According to the table from dat6 and bar plot p3 above, we can find the duration from April to May is the peak time for travel for Resort Hotel, the following peak time is the duration in October.**s
+**According to the table from dat6 and bar plot p3 above, we can find the duration from April to May is the peak time for travel for Resort Hotel, the following peak time is the duration in October.**
+
+
+## determine the average daily rate per month of Resort Hotel
+```{r}
+dat7 <- dat5 %>% dplyr::select(arrival_date_month,
+                adr)
+
+dat7 <- dat7 %>%
+  group_by(arrival_date_month) %>%
+  summarise_at(vars(adr),
+               list(adr = mean))
+
+kable(dat7, caption = "ADR per month in 2016 of Resort Hotel") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+### use geom_plot to plot the adr in 12 months of Resort Hotel
+```{r}
+p4 <- dat7 %>% ggplot(aes(x = arrival_date_month, y=adr)) +
+  ggtitle("ADR in 12 months of Resort Hotel in 2016") +
+  geom_point()
+p4
+``` 
+
+**The table of dat7 is used to calculate the mean ADR for each month in 2016, and we can find the peak and worst ADR of the Resort Hotel during 2016 from graph p4. The highest ADR contributed to August, which means the Resort Hotel was increasing the money it made from renting out rooms. However, the Resort Hotel should increase the price per room in November, and from February to March.**
