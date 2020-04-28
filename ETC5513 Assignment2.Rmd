@@ -37,3 +37,7 @@ dat <- read_csv("Data/hotel_bookings.csv")
 
 # The average daily rate in 2016
 
+
+# Conclusion
+
+
