@@ -27,17 +27,76 @@ library(ggplot2)
 library(lubridate)
 library(gridExtra)
 library(rmdformats)
+
 ```
 
 ```{r, echo = TRUE, message = FALSE, warning = FALSE}
 dat <- read_csv("Data/hotel_bookings.csv")
 ```
 
-# The number of arrival in each month in 2016
+```{r}
+# process the data to only contains information of city hotel
+dat2 <- dat %>% dplyr::filter(hotel %in% c("City Hotel")
+)
+```
 
 # The average daily rate in 2016
 
 
 # Conclusion
+
+
+
+## count the number of arrivals per month of City Hotel
+```{r}
+dat3 <-dat2 %>%
+  dplyr::select(arrival_date_month) %>%
+group_by(arrival_date_month) %>%
+  mutate(arrivals = n()) %>%
+  unique() %>%
+  arrange(-arrivals)
+
+#dat3 <-dat2 %>%  
+# count(arrival_date_month, names = "arrivals", sort = TRUE)
+
+kable(dat3, caption = "Number of Arrivals per month of City Hotel in 2016") %>%
+kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+### use a bar plot to visualize arrivals per month of City Hotel
+```{r}
+p1 <- dat2 %>% ggplot(aes(arrival_date_month)) +
+   geom_bar(aes(x = arrival_date_month)) +
+  ggtitle("Number of Arrivals in Different Month of City Hotel in 2016") + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+p1
+```
+
+**According to the table from dat3 and bar plot p1 above, we can find the duration from September to October is the peak time of travel for City Hotel, the following peak time is the duration from April to June.**
+
+## determine the average daily rate per month of City Hotel
+```{r}
+dat4 <- dat2 %>% dplyr::select(arrival_date_month,
+                adr)
+
+dat4 <- dat4 %>%
+  group_by(arrival_date_month) %>%
+  summarise_at(vars(adr),
+               list(adr = mean))
+
+kable(dat4, caption = "ADR per month in 2016 of City Hotel") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+
+```
+
+### use geom_plot to plot the adr in 12 months of City Hotel
+```{r}
+p2 <- dat4 %>% ggplot(aes(x = arrival_date_month, y=adr)) +
+  ggtitle("ADR in 12 months of City Hotel in 2016") +
+  geom_point()
+p2
+```  
+
+**The table of dat4 is used to calculate the mean ADR for each month in 2016, and we can find the peak and worst ADR of the City Hotel during 2016 from graph p2. The highest ADR contributed to July, which means the Resort Hotel was increasing the money it made from renting out rooms. However, the Resort Hotel should increase the price per room in November, and from January to March.**
 
 
