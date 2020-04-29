@@ -12,7 +12,7 @@ output:
 ---
 
 # Introduction 
-The goal of this report is to find when is the busy time of year to book a hotel room, and compare the average daily rate (ADR) within the 12 months in 2016 and between the city hotel and the resort hotel. 
+The goal of this report is to find when is the most busy time of year to book a hotel room, and compare the average daily rate (ADR) within the 12 months in 2016 and between the city hotel and the resort hotel. 
 The data used in this research contains booking information for a city hotel and a resort hotel in 2016, and includes information such as number of days that elapsed between the booking and arrival date, month of arrival date, ADR and number of special requests. 
 This can help hotels to prepare the best services in advance on the most busy months, including the efficient supplies for special requests. Through comparing the ADR which shows how much revenue is made per room on average, therefore these hotels can make some decisions and look into ways to boost price per room to increase their ADR. 
 
@@ -27,7 +27,6 @@ library(ggplot2)
 library(lubridate)
 library(gridExtra)
 library(rmdformats)
-
 ```
 
 ```{r, echo = TRUE, message = FALSE, warning = FALSE}
@@ -47,13 +46,6 @@ dat5 <- dat %>% dplyr::filter(hotel %in% c("Resort Hotel")
 
 # The number of arrival in each month in 2016
 
-# The average daily rate in 2016
-
-
-# Conclusion
-
-
-
 ## count the number of arrivals per month of City Hotel
 ```{r}
 dat3 <-dat2 %>%
@@ -66,7 +58,7 @@ group_by(arrival_date_month) %>%
 #dat3 <-dat2 %>%  
 # count(arrival_date_month, names = "arrivals", sort = TRUE)
 
-kable(dat3, caption = "Number of Arrivals per month of City Hotel in 2016") %>%
+kable(dat3, caption = "Table1:Number of Arrivals per month of City Hotel in 2016") %>%
 kable_styling(bootstrap_options = c("striped", "hover"))
 ```
 
@@ -74,39 +66,12 @@ kable_styling(bootstrap_options = c("striped", "hover"))
 ```{r}
 p1 <- dat2 %>% ggplot(aes(arrival_date_month)) +
    geom_bar(aes(x = arrival_date_month)) +
-  ggtitle("Number of Arrivals in Different Month of City Hotel in 2016") + 
+  ggtitle("p1: Number of Arrivals in Different Month of City Hotel in 2016") + 
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 p1
 ```
 
-**According to the table from dat3 and bar plot p1 above, we can find the duration from September to October is the peak time of travel for City Hotel, the following peak time is the duration from April to June.**
-
-## determine the average daily rate per month of City Hotel
-```{r}
-dat4 <- dat2 %>% dplyr::select(arrival_date_month,
-                adr)
-
-dat4 <- dat4 %>%
-  group_by(arrival_date_month) %>%
-  summarise_at(vars(adr),
-               list(adr = mean))
-
-kable(dat4, caption = "ADR per month in 2016 of City Hotel") %>%
-  kable_styling(bootstrap_options = c("striped", "hover"))
-
-```
-
-### use geom_plot to plot the adr in 12 months of City Hotel
-```{r}
-p2 <- dat4 %>% ggplot(aes(x = arrival_date_month, y=adr)) +
-  ggtitle("ADR in 12 months of City Hotel in 2016") +
-  geom_point()
-p2
-```  
-
-**The table of dat4 is used to calculate the mean ADR for each month in 2016, and we can find the peak and worst ADR of the City Hotel during 2016 from graph p2. The highest ADR contributed to July, which means the Resort Hotel was increasing the money it made from renting out rooms. However, the Resort Hotel should increase the price per room in November, and from January to March.**
-
-
+**According to the *Table 1* and bar plot *p1* above, we can find the duration from September to October is the peak time of travel to City Hotel, the following peak time is the duration from April to June.**
 
 ## count the number of arrivals per month of Resort Hotel
 ```{r}
@@ -120,7 +85,7 @@ group_by(arrival_date_month) %>%
 #dat6 <-dat5 %>%  
 # count(arrival_date_month, names = "arrivals", sort = TRUE)
 
-kable(dat6, caption = "Number of Arrivals per month of Resort Hotel in 2016") %>%
+kable(dat6, caption = "Table 3: Number of Arrivals per month of Resort Hotel in 2016") %>%
 kable_styling(bootstrap_options = c("striped", "hover"))
 ```
 
@@ -128,13 +93,40 @@ kable_styling(bootstrap_options = c("striped", "hover"))
 ```{r}
 p3 <- dat5 %>% ggplot(aes(arrival_date_month)) +
    geom_bar(aes(x = arrival_date_month)) +
-  ggtitle("Number of Arrivals in Different Month of Resort Hotel in 2016") + 
+  ggtitle("p3: Number of Arrivals in Different Month of Resort Hotel in 2016") + 
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 p3
 ```
 
-**According to the table from dat6 and bar plot p3 above, we can find the duration from April to May is the peak time for travel for Resort Hotel, the following peak time is the duration in October.**
+**According to the *Table 3* and bar plot *p3* above, we can find the duration in October is the peak time for travel to Resort Hotel, the following peak time is the duration in from March to May.**
 
+
+# The average daily rate in 2016
+
+## determine the average daily rate per month of City Hotel
+```{r}
+dat4 <- dat2 %>% dplyr::select(arrival_date_month,
+                adr)
+
+dat4 <- dat4 %>%
+  group_by(arrival_date_month) %>%
+  summarise_at(vars(adr),
+               list(adr = mean))
+
+kable(dat4, caption = "Table 2: ADR per month in 2016 of City Hotel") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+
+```
+
+### use geom_plot to plot the adr in 12 months of City Hotel
+```{r}
+p2 <- dat4 %>% ggplot(aes(x = arrival_date_month, y=adr)) +
+  ggtitle("p2: ADR in 12 months of City Hotel in 2016") +
+  geom_point()
+p2
+```  
+
+**The *Table 2* is used to calculate the mean ADR for each month in 2016, and we can find the peak and worst ADR of the City Hotel during 2016 from graph *p2*. The highest ADR contributed to November, which means the City Hotel was increasing the money it made from renting out rooms. However, the City Hotel should increase the price per room from January to February.**
 
 ## determine the average daily rate per month of Resort Hotel
 ```{r}
@@ -146,16 +138,26 @@ dat7 <- dat7 %>%
   summarise_at(vars(adr),
                list(adr = mean))
 
-kable(dat7, caption = "ADR per month in 2016 of Resort Hotel") %>%
+kable(dat7, caption = "Table 4: ADR per month in 2016 of Resort Hotel") %>%
   kable_styling(bootstrap_options = c("striped", "hover"))
 ```
 
 ### use geom_plot to plot the adr in 12 months of Resort Hotel
 ```{r}
 p4 <- dat7 %>% ggplot(aes(x = arrival_date_month, y=adr)) +
-  ggtitle("ADR in 12 months of Resort Hotel in 2016") +
+  ggtitle("p4: ADR in 12 months of Resort Hotel in 2016") +
   geom_point()
 p4
 ``` 
 
-**The table of dat7 is used to calculate the mean ADR for each month in 2016, and we can find the peak and worst ADR of the Resort Hotel during 2016 from graph p4. The highest ADR contributed to August, which means the Resort Hotel was increasing the money it made from renting out rooms. However, the Resort Hotel should increase the price per room in November, and from February to March.**
+**The *Table 4* is used to calculate the mean ADR for each month in 2016, and we can find the peak and worst ADR of the Resort Hotel during 2016 from graph *p4*. The highest ADR contributed to August, which means the Resort Hotel was increasing the money it made from renting out rooms. However, the Resort Hotel should increase the price per room in November, and from February to April.**
+
+
+# Conclusion
+Overall, according to *Table 1*, *p1*,*Table 3* and *p3* above, we can find the duration from September to October is the most busy time for both City Hotel and the Resort Hotel, however, the following peak time is the duration from April to June and from March to May respectively for City Hotel and Resort Hotel. Therefore, each hotel need to prepare for enough staffs, sufficient supplies including for special request in advance from the busy months, in order to provide the best service to all the customers. 
+In terms of the Average Daily Rate in 2016, from *Table 2*, *p2*,*Table 4* and *p4* above, the City Hotel and Resort Hotel reached their highest ADR in November and August respectively. The higher the ADR, the better performance for hotels of making money from renting rooms out. However, we can find the total average ADR of City Hotel is generally higher than that of Resort Hotel. The City Hotel could provide some special services such as massage or charged buffet in order to boost the price per room from January to February and improve the ADR, in the same way, the Resort Hotel should find ways to increase the ADR in November and from February to April as well. 
+
+
+
+
+
