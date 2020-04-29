@@ -45,6 +45,8 @@ dat5 <- dat %>% dplyr::filter(hotel %in% c("Resort Hotel")
 )
 ```
 
+# The number of arrival in each month in 2016
+
 # The average daily rate in 2016
 
 
